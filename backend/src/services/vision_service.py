@@ -18,9 +18,9 @@ class VisionService:
           {
             "type": "text", 
             "text": (
-                "Describe this plant in detail. Identify the species if possible. "
-                "Look closely for any signs of disease, pests, yellowing, or dryness. "
-                "Provide a concise botanical description."
+              "Describe this plant in detail. Identify the species if possible. "
+              "Look closely for any signs of disease, pests, yellowing, or dryness. "
+              "Provide a concise botanical description."
             )
           },
           {
@@ -31,11 +31,11 @@ class VisionService:
     )
 
     try:
-        response = self.llm.invoke([message])
-        description = response.content
-        return description
+      response = self.llm.invoke([message])
+      description = response.content
+      return description
     except Exception as e:
-        return "Error analyzing image."
+      return "Error analyzing image."
 
 # Teste manual (opcional)
 if __name__ == "__main__":
