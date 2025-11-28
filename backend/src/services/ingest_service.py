@@ -61,6 +61,6 @@ class IngestService:
 if __name__ == "__main__":
   service = IngestService()
   result = service.ingest_videos([
-      "https://www.youtube.com/watch?v=g6FErRqDnAI" # Example monstera
+    "https://www.youtube.com/watch?v=g6FErRqDnAI" # Example monstera
   ])
   print(result)
