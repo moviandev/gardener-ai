@@ -73,5 +73,6 @@ The frontend expects the backend to be running at `http://127.0.0.1:8000/api/v1`
 
 Chat: Sends `POST` requests with JSON payloads (text + base64 images).
 Ingestion: Sends `POST` requests with video URLs for RAG training.
+
 ---
 Plant AI Agent - Ironhack Final Project
