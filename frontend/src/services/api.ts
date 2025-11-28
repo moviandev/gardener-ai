@@ -2,18 +2,33 @@ import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_API_URL;
 
-export const api = axios.create({
-  baseURL: baseURL,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+const api = axios.create({
+  baseURL
 });
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    console.error('Error on the request', error);
-    return Promise.reject(error);
-  }
-);
+export interface ChatResponse {
+  answer: string;
+  sources: string[];
+}
+
+export interface IngestResponse {
+  status: string;
+  message: string;
+}
+
+export const chatService = {
+  sendMessage: async (question: string, imageBase64?: string | null) => {
+    const response = await api.post<ChatResponse>('/chat', {
+      question,
+      image_base64: imageBase64,
+    });
+    return response.data;
+  },
+
+  ingestVideo: async (url: string) => {
+    const response = await api.post<IngestResponse>('/ingest', {
+      video_urls: [url],
+    });
+    return response.data;
+  },
+};
