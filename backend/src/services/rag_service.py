@@ -18,11 +18,31 @@ class PlantBrain:
     self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 3})
     self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 
+  def validate_topic(self, question: str) -> bool:
+    check_prompt = ChatPromptTemplate.from_template(
+      """
+      You are a topic classifier. Determine if the user's question is related to plants, gardening, botany, or agriculture.
+      
+      Question: {question}
+      
+      Return ONLY "YES" if it is related, or "NO" if it is not.
+      """
+    )
+    
+    chain = check_prompt | self.llm | StrOutputParser()
+    result = chain.invoke(question).strip().upper()
+    return "YES" in result
+
   def process_query(self, user_question: str, image_description: str = ""):
     """
     Receives the user question and then one visual description (if there's a picture)
     searches the context in the DB and generates a response.
     """
+    if not self.validate_topic(user_question):
+      return {
+        "answer": "Sorry, I\'m only a specialist in plants and gardening. 🌱 Please ask a question related to that topic.",
+        "context": []
+      }
     
     # Prompt Engineering: Instructions for the agent
     template = """
