@@ -1,3 +1,4 @@
 .env
 venv
 chromadb_store
+__pycache__

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.api.v1 import chat, ingest
+from .api.v1 import chat, ingest
 
 app = FastAPI(
   title="Plant AI Agent API 🌱",
