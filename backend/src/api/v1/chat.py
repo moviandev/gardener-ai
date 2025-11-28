@@ -11,7 +11,6 @@ vision = VisionService()
 @router.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
   try:
-    # 1. Visão
     image_description = ""
     if request.image_base64:
       image_description = vision.analyze_image(request.image_base64)
