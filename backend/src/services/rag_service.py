@@ -6,14 +6,14 @@ from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnablePassthrough, RunnableParallel
 
 class PlantBrain: 
   def __init__(self):
     self.embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     self.vectorstore = Chroma(
-        persist_directory="./chromadb_store", 
-        embedding_function=self.embeddings
+      persist_directory="./chromadb_store", 
+      embedding_function=self.embeddings
     )        
     self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 3})
     self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
@@ -48,18 +48,19 @@ class PlantBrain:
     
     prompt = ChatPromptTemplate.from_template(template)
 
+    setup_and_retrieval = RunnableParallel(
+      {"context": self.retriever, "question": RunnablePassthrough(), "image_description": lambda x: image_description}
+    )
+
     # Definição da Chain (Cadeia de execução) usando LCEL (LangChain Expression Language)
     # É uma sintaxe moderna e "pipe-like" (|)
-    chain = (
-        {
-            "context": self.retriever, 
-            "question": RunnablePassthrough(), 
-            "image_description": lambda x: image_description
-        }
-        | prompt
-        | self.llm
-        | StrOutputParser()
+    answer_chain = (
+      prompt
+      | self.llm
+      | StrOutputParser()
     )
+
+    chain = setup_and_retrieval.assign(answer=answer_chain)
 
     # Executa a cadeia
     return chain.invoke(user_question)
@@ -68,31 +69,25 @@ class PlantBrain:
 Testing langchain and the response with Dummy Data
 '''
 if __name__ == "__main__":
-    try:
-        brain = PlantBrain()
-        print("🤖 Agente de Plantas Iniciado (OpenAI Version)")
+  try:
+    brain = PlantBrain()
+    print("🤖 Agente de Plantas Iniciado (OpenAI Version)")
 
-        # --- TRUQUE PARA TESTE RÁPIDO ---
-        # Vamos adicionar um "conhecimento falso" manualmente no banco só para ver se ele busca.
-        # Isso simula o que o ingest.py faria com as legendas do YouTube.
-        print("💾 Inserindo conhecimento de teste no banco...")
-        brain.vectorstore.add_texts(
-            texts=["O segredo para regar orquídeas é usar cubos de gelo uma vez por semana, pois elas gostam de água gelada e lenta."],
-            metadatas=[{"source": "teste_manual"}]
-        )
-        print("✅ Dados de teste inseridos!")
-        # --------------------------------
+    print("💾 Inserindo conhecimento de teste no banco...")
+    brain.vectorstore.add_texts(
+        texts=["O segredo para regar orquídeas é usar cubos de gelo uma vez por semana, pois elas gostam de água gelada e lenta."],
+        metadatas=[{"source": "teste_manual"}]
+    )
+    print("✅ Dados de teste inseridos!")
+    pergunta = "Como devo regar minha orquídea?"
+    print(f"\n👤 Pergunta: {pergunta}")
+      
+    response = brain.process_query(pergunta)
+    print(f"🤖 Resposta:\n{response}")
 
-        # Agora perguntamos sobre esse conhecimento específico
-        pergunta = "Como devo regar minha orquídea?"
-        print(f"\n👤 Pergunta: {pergunta}")
-        
-        response = brain.process_query(pergunta)
-        print(f"🤖 Resposta:\n{response}")
-
-        print("\n---")
-        print("Nota: Se ele respondeu sobre 'cubos de gelo', o RAG funcionou!")
-        
-    except Exception as e:
-        print(f"Erro ao iniciar: {e}")
-        print("Dica: Verifique se a OPENAI_API_KEY está configurada no ambiente.")
+    print("\n---")
+    print("Nota: Se ele respondeu sobre 'cubos de gelo', o RAG funcionou!")
+      
+  except Exception as e:
+    print(f"Erro ao iniciar: {e}")
+    print("Dica: Verifique se a OPENAI_API_KEY está configurada no ambiente.")

@@ -16,45 +16,45 @@ class IngestService:
 
   def ingest_videos(self, video_urls: list[str]) -> dict:
     if not video_urls:
-        return {"status": "error", "message": "No URL Added."}
+      return {"status": "error", "message": "No URL Added."}
     
     all_documents = []
     errors = []
 
     for url in video_urls:
-        try:
-            loader = YoutubeLoader.from_youtube_url(
-                url, 
-                add_video_info=False, 
-                language=["pt", "pt-BR", "en"] 
-            )
-            docs = loader.load()
-            all_documents.extend(docs)
-        except Exception as e:
-            error_msg = f"Processing error on {url}: {str(e)}"
-            print(f"⚠️ {error_msg}")
-            errors.append(error_msg)
+      try:
+        loader = YoutubeLoader.from_youtube_url(
+          url, 
+          add_video_info=False, 
+          language=["pt", "pt-BR", "en"] 
+        )
+        docs = loader.load()
+        all_documents.extend(docs)
+      except Exception as e:
+        error_msg = f"Processing error on {url}: {str(e)}"
+        print(f"⚠️ {error_msg}")
+        errors.append(error_msg)
 
     if not all_documents:
-        return {"status": "error", "message": "Cannot load documents", "errors": errors}
+      return {"status": "error", "message": "Cannot load documents", "errors": errors}
 
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=self.chunk_size, 
-        chunk_overlap=self.chunk_overlap
+      chunk_size=self.chunk_size, 
+      chunk_overlap=self.chunk_overlap
     )
     splits = text_splitter.split_documents(all_documents)
     
     Chroma.from_documents(
-        documents=splits,
-        embedding=self.embeddings,
-        persist_directory=self.DB_PATH
+      documents=splits,
+      embedding=self.embeddings,
+      persist_directory=self.DB_PATH
     )
     
     return {
-        "status": "success", 
-        "message": f"PSuccefully ran! {len(splits)} new knowledge fragments added!",
-        "chunks_count": len(splits),
-        "errors": errors
+      "status": "success", 
+      "message": f"PSuccefully ran! {len(splits)} new knowledge fragments added!",
+      "chunks_count": len(splits),
+      "errors": errors
     }
 
 # --- Bloco para teste manual direto (opcional) ---
