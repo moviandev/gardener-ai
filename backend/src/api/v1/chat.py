@@ -33,5 +33,5 @@ async def chat_endpoint(request: ChatRequest):
     )
 
   except Exception as e:
-    print(f"Erro no chat endpoint: {e}")
+    print(f"Error in chat endpoint: {e}")
     raise HTTPException(status_code=500, detail=str(e))

@@ -52,8 +52,6 @@ class PlantBrain:
       {"context": self.retriever, "question": RunnablePassthrough(), "image_description": lambda x: image_description}
     )
 
-    # Definição da Chain (Cadeia de execução) usando LCEL (LangChain Expression Language)
-    # É uma sintaxe moderna e "pipe-like" (|)
     answer_chain = (
       prompt
       | self.llm
@@ -61,8 +59,6 @@ class PlantBrain:
     )
 
     chain = setup_and_retrieval.assign(answer=answer_chain)
-
-    # Executa a cadeia
     return chain.invoke(user_question)
 
 '''

@@ -18,5 +18,5 @@ def ingest_videos_endpoint(request: IngestRequest):
   except HTTPException as he:
     raise he
   except Exception as e:
-    print(f"Erro fatal no endpoint de ingestão: {e}")
+    print(f"Error in ingest endpoint: {e}")
     raise HTTPException(status_code=500, detail=str(e))

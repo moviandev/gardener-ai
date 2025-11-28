@@ -52,7 +52,7 @@ class IngestService:
     
     return {
       "status": "success", 
-      "message": f"PSuccefully ran! {len(splits)} new knowledge fragments added!",
+      "message": f"Succefully ran! {len(splits)} new knowledge fragments added!",
       "chunks_count": len(splits),
       "errors": errors
     }
