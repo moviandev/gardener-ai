@@ -1,42 +1,33 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  margin: 0;
+  padding: 0;
+  /* Gradiente profundo e elegante */
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
+  color: white;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Classes utilitárias para o efeito de Vidro */
+@layer components {
+  .glass-panel {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .glass-input {
+    @apply bg-black/20 backdrop-blur-md border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-plant-green/50 focus:bg-black/40 transition-all duration-300;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .glass-btn {
+    @apply bg-plant-green hover:bg-plant-green-dark text-white font-medium transition-all duration-300 shadow-lg hover:shadow-plant-green/20;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

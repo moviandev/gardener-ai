@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import { api } from './services/api';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [status, setStatus] = useState<string>('Carregando...');
+
+  useEffect(() => {
+    // Teste simples de conexão (assumindo que você tem uma rota raiz "/" ou "/health")
+    api.get('/') 
+      .then((response) => {
+        setStatus(`Backend conectado! Resposta: ${JSON.stringify(response.data)}`);
+      })
+      .catch((error) => {
+        setStatus('Erro ao conectar com o backend. O servidor está rodando?');
+        console.error(error);
+      });
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+      <h1>Gardener Agent 🌱</h1>
+      <div style={{ 
+        padding: '1rem', 
+        background: '#f0f0f0', 
+        borderRadius: '8px',
+        marginTop: '1rem' 
+      }}>
+        <strong>Status do Sistema:</strong> {status}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
