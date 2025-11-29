@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -13,14 +14,16 @@ from langchain.agents import AgentExecutor, create_tool_calling_agent
 class PlantBrain: 
   def __init__(self):
     self.embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+    self.current_file = Path(__file__).resolve()
+    self.backend_root = self.current_file.parents[2]
     self.vectorstore = Chroma(
-      persist_directory="./chromadb_store", 
+      persist_directory=str(self.backend_root / "chromadb_store"),
       embedding_function=self.embeddings
     )
     self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 
   @tool
-  def search_plant_knowledge(query: str):
+  def search_plant_knowledge(self, query: str):
       """
       Useful for answering questions about plant care, watering, diseases, 
       and identification based on the video library.
@@ -28,7 +31,7 @@ class PlantBrain:
       """
 
       embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-      db = Chroma(persist_directory="./chromadb_store", embedding_function=embeddings)
+      db = Chroma(persist_directory=str(self.backend_root / "chromadb_store"), embedding_function=embeddings)
       retriever = db.as_retriever(search_kwargs={"k": 3})
       
       docs = retriever.invoke(query)
