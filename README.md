@@ -109,6 +109,7 @@ cd mobile
 npm install
 npx expo start -c
 ```
+Scan the QR Code with your iPhone/Android to launch Expo Go.
 
 ## ✨ Key Features
 - 🌱 **Neural Knowledge Base**: The agent learns by watching YouTube videos you provide. It downloads transcripts, generates embeddings, and stores them in ChromaDB.
@@ -118,6 +119,20 @@ npx expo start -c
 - 🛡️ **Semantic Guardrails**: An internal AI layer validates if the user's question or the video content is actually related to plants, preventing off-topic usage.
 
 - 💎 **Liquid Glass UI**: A consistent, high-fidelity design system across Web and Mobile inspired by VisionOS, featuring heavy blurs and organic gradients.
+
+## 🛠️ Tech Stack Details
+
+| **Module** | **Technologies**        | **Key Libraries**                           |
+|------------|--------------------------|----------------------------------------------|
+| Backend    | Python 3.10, FastAPI     | LangChain, ChromaDB, OpenAI, Pydantic       |
+| Frontend   | React, TypeScript, Vite  | Tailwind CSS, Axios, Lucide React           |
+| Mobile     | React Native, Expo       | NativeWind, Expo Router, Expo Blur          |
+
+## 📚 Documentation
+For detailed technical decisions and specific setup instructions, refer to the individual READMEs:
+- [Backend Documentation](./backend/README.md)
+- [Frontend Documentation](./frontend/README.md)
+- [Mobile Documentation](./mobile/README.md)
 
 ---
 Developed as a Final Project for Ironhack.
