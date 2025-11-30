@@ -56,7 +56,7 @@ npm install
 Since the app runs on a physical device (or emulator), it cannot access localhost. It must connect to your computer's Local IP Address.
 
 1. Find your Local IP:
-   - Mac: Run ipconfig getifaddr en0 in the terminal (e.g., 192.168.1.15).
+   - Mac: Run `ipconfig getifaddr en0` in the terminal (e.g., `192.168.1.15`).
    - Windows: Run ipconfig.
 2. Configure Environment Variables: Create a .env file in the mobile/ root and add your IP:
 

@@ -25,22 +25,15 @@ export const ChatBubble = ({ message }: ChatBubbleProps) => {
 
   return (
     <View className={clsx("flex-row mb-6 mx-4", isAi ? "justify-start" : "justify-end")}>
-      
-      {/* Avatar (Only for AI) */}
       {isAi && (
         <View className="w-8 h-8 rounded-full bg-plant-green/20 items-center justify-center mr-2 border border-plant-green/30 mt-1">
           <Bot size={16} color="#10b981" />
         </View>
       )}
-
-      {/* Bubble Container */}
       <View className="max-w-[85%]">
         {isAi ? (
           <GlassView intensity={30} className="rounded-tl-none p-4">
-             {/* Text Content */}
             <ContentText />
-
-            {/* Sources Section */}
             {message.sources && message.sources.length > 0 && (
               <View className="mt-3 pt-3 border-t border-white/10">
                 <Text className="text-white/40 text-[10px] uppercase font-bold mb-1">
