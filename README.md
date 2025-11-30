@@ -111,13 +111,13 @@ npx expo start -c
 ```
 
 ## ✨ Key Features
-- 🌱 *Neural Knowledge Base*: The agent learns by watching YouTube videos you provide. It downloads transcripts, generates embeddings, and stores them in ChromaDB.
+- 🌱 **Neural Knowledge Base**: The agent learns by watching YouTube videos you provide. It downloads transcripts, generates embeddings, and stores them in ChromaDB.
 
-- 👁️ *Plant Vision*: Upload a photo of a sick plant, and the agent uses GPT-4o Vision to diagnose issues before searching the knowledge base for cures.
+- 👁️ **Plant Vision**: Upload a photo of a sick plant, and the agent uses GPT-4o Vision to diagnose issues before searching the knowledge base for cures.
 
-- 🛡️ *Semantic Guardrails*: An internal AI layer validates if the user's question or the video content is actually related to plants, preventing off-topic usage.
+- 🛡️ **Semantic Guardrails**: An internal AI layer validates if the user's question or the video content is actually related to plants, preventing off-topic usage.
 
-- 💎 *Liquid Glass UI*: A consistent, high-fidelity design system across Web and Mobile inspired by VisionOS, featuring heavy blurs and organic gradients.
+- 💎 **Liquid Glass UI**: A consistent, high-fidelity design system across Web and Mobile inspired by VisionOS, featuring heavy blurs and organic gradients.
 
 ---
 Developed as a Final Project for Ironhack.

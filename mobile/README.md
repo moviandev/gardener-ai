@@ -81,13 +81,13 @@ npx expo start -c
 - Simulator: Press `i` for iOS or `a` for Android.
 
 ## 🛠️ Technical Decisions
-1. *Expo Router*
+1. **Expo Router**
 Decision: Used file-based routing (app/index.tsx). Why: It aligns the mobile development mental model with the web (Next.js style), simplifying navigation logic and reducing boilerplate code compared to React Navigation.
-2. *NativeWind (Tailwind for RN)*
+2. **NativeWind (Tailwind for RN)**
 Decision: Used Tailwind utility classes for styling. Why: Allowed us to share design tokens (colors, spacing) with the Web Frontend, ensuring brand consistency while speeding up UI development significantly.
-3. *Custom Hooks (useChat)*
+3. **Custom Hooks (useChat)**
 Decision: Extracted all state logic into hooks/. Why: Keeps the UI components (index.tsx) purely presentational. This makes the code easier to test and allows us to swap the API layer without breaking the layout.
-4. *Smart API Switching*
+4. **Smart API Switching**
 Decision: Implemented a getBaseUrl helper in services/api.ts. Why: Automatically detects if the app is running on Android Emulator (needs 10.0.2.2) or iOS/Physical Device (needs LAN IP), preventing common connection errors during development.
 
 ---
