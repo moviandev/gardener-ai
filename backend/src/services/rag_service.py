@@ -14,27 +14,27 @@ from langchain.agents import AgentExecutor, create_tool_calling_agent
 # --- TOOL DEFINITION ---
 @tool
 def search_plant_knowledge(query: str):
-    """
-    Useful for answering questions about plant care, watering, diseases, 
-    and identification based on the video library.
-    Always use this tool to find information before answering.
-    """
-    current_file = Path(__file__).resolve()
-    backend_root = current_file.parents[2]
-    
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-    db = Chroma(persist_directory=str(backend_root / "chromadb_store"), embedding_function=embeddings)
-    
-    retriever = db.as_retriever(search_kwargs={"k": 3})
-    docs = retriever.invoke(query)
-    
-    results = []
-    for doc in docs:
-      source = doc.metadata.get("source", "Unknown")
-      content = doc.page_content
-      results.append(f"Content: {content}\nSOURCE_URL: {source}")
-    
-    return "\n\n---\n\n".join(results)
+  """
+  Useful for answering questions about plant care, watering, diseases, 
+  and identification based on the video library.
+  Always use this tool to find information before answering.
+  """
+  current_file = Path(__file__).resolve()
+  backend_root = current_file.parents[2]
+  
+  embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+  db = Chroma(persist_directory=str(backend_root / "chromadb_store"), embedding_function=embeddings)
+  
+  retriever = db.as_retriever(search_kwargs={"k": 3})
+  docs = retriever.invoke(query)
+  
+  results = []
+  for doc in docs:
+    source = doc.metadata.get("source", "Unknown")
+    content = doc.page_content
+    results.append(f"Content: {content}\nSOURCE_URL: {source}")
+  
+  return "\n\n---\n\n".join(results)
 
 class PlantBrain: 
   def __init__(self):
