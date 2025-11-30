@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-# RESTORED: Using the official Loader from V1
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -45,8 +44,6 @@ class IngestService:
     if not video_urls:
       return {"status": "error", "message": "No URL Added."}
     
-    # --- NEW: Instantiate the API client (Required for youtube-transcript-api v1.2+) ---
-    # The static methods like YouTubeTranscriptApi.get_transcript are removed.
     ytt_api = YouTubeTranscriptApi()
 
     all_documents = []
@@ -56,41 +53,33 @@ class IngestService:
       try:
         print(f"📥 Processing: {url}")
         
-        # 1. Extract Video ID safely
         video_id = None
         if "v=" in url:
-            video_id = url.split("v=")[1].split("&")[0]
+          video_id = url.split("v=")[1].split("&")[0]
         elif "youtu.be" in url:
-            video_id = url.split("/")[-1]
+          video_id = url.split("/")[-1]
         
         if not video_id:
-            raise ValueError(f"Could not parse video ID from {url}")
+          raise ValueError(f"Could not parse video ID from {url}")
 
-        # 2. Fetch Transcript (New v1.2+ Syntax)
         try:
-            # .fetch() returns a Transcript object. 
-            # .to_raw_data() converts it to the list of dicts [{'text':...}, ...]
-            transcript_data = ytt_api.fetch(
-                video_id, 
-                languages=["pt", "pt-BR", "en"]
-            ).to_raw_data()
-            
-            full_text = " ".join([item['text'] for item in transcript_data])
-            
-            from langchain_core.documents import Document
-            doc = Document(
-                page_content=full_text,
-                metadata={"source": url, "video_id": video_id}
-            )
-            # Create a temporary list for validation
-            current_docs = [doc]
+          transcript_data = ytt_api.fetch(
+            video_id, 
+            languages=["pt", "pt-BR", "en"]
+          ).to_raw_data()
+          
+          full_text = " ".join([item['text'] for item in transcript_data])
+          
+          from langchain_core.documents import Document
+          doc = Document(
+            page_content=full_text,
+            metadata={"source": url, "video_id": video_id}
+          )
+          current_docs = [doc]
             
         except Exception as e:
-            # Re-raise to be caught by the outer loop and logged
-            raise Exception(f"Transcript API Error: {str(e)}")
+          raise Exception(f"Transcript API Error: {str(e)}")
 
-        # --- VALIDATION STEP ---
-        # We take a sample of the text (first 2000 chars)
         text_sample = current_docs[0].page_content[:2000]
         
         if not self.validate_content(text_sample):
@@ -106,7 +95,7 @@ class IngestService:
         error_msg = f"Processing error on {url}: {str(e)}"
         print(f"⚠️ {error_msg}")
         errors.append(error_msg)
-        continue # CRITICAL FIX: Ensures we skip to the next video on error
+        continue 
 
     if not all_documents:
       return {"status": "error", "message": "Cannot load documents", "errors": errors}
@@ -132,10 +121,8 @@ class IngestService:
       "errors": errors
     }
 
-# --- Manual Test Block ---
 if __name__ == "__main__":
   service = IngestService()
-  # Test with the Monstera video
   result = service.ingest_videos([
     "https://www.youtube.com/watch?v=g6FErRqDnAI" 
   ])

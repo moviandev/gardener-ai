@@ -11,7 +11,6 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.tools import tool
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 
-# --- TOOL DEFINITION ---
 @tool
 def search_plant_knowledge(query: str):
   """
