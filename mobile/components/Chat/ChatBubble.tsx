@@ -17,8 +17,6 @@ interface ChatBubbleProps {
 
 export const ChatBubble = ({ message }: ChatBubbleProps) => {
   const isAi = message.role === 'ai';
-
-  // Component to render the content text
   const ContentText = () => (
     <Text className={clsx("text-base leading-6", isAi ? "text-white/90" : "text-white")}>
       {message.content}
@@ -58,7 +56,6 @@ export const ChatBubble = ({ message }: ChatBubbleProps) => {
           </GlassView>
         ) : (
           <View className="bg-plant-green p-4 rounded-2xl rounded-tr-none shadow-sm">
-            {/* User Image Preview */}
             {message.image && (
               <Image 
                 source={{ uri: message.image }} 
@@ -71,7 +68,6 @@ export const ChatBubble = ({ message }: ChatBubbleProps) => {
         )}
       </View>
 
-      {/* Avatar (Only for User) */}
       {!isAi && (
         <View className="w-8 h-8 rounded-full bg-white/10 items-center justify-center ml-2 border border-white/20 mt-1">
           <User size={16} color="white" />

@@ -6,7 +6,6 @@ export const useIngest = () => {
   const [isTraining, setIsTraining] = useState(false);
 
   const trainAgent = async (url: string) => {
-    // Basic validation
     if (!url.trim()) return;
     
     if (!url.includes('youtube.com') && !url.includes('youtu.be')) {

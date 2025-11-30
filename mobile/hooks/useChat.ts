@@ -25,10 +25,7 @@ export const useChat = () => {
     setIsLoading(true);
 
     try {
-      // 2. Call the Python Backend
       const response = await chatService.sendMessage(content, image);
-
-      // 3. Add AI response
       const aiMessage: Message = {
         role: 'ai',
         content: response.answer,

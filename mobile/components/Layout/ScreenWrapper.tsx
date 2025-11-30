@@ -18,7 +18,6 @@ export const ScreenWrapper = ({ children, className, ...props }: ScreenWrapperPr
       end={{ x: 1, y: 1 }}
       style={{ flex: 1 }}
     >
-      {/* GARANTA QUE AQUI NÃO TEM 'items-center' */}
       <SafeAreaView className={twMerge("flex-1 w-full", className)} {...props}>
         <StatusBar style="light" />
         {children}

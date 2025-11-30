@@ -44,10 +44,7 @@ export default function Home() {
               className="rounded-[25px] border-white/10 overflow-hidden" 
               style={{ width: '100%' }}
             >
-              {/* 2. Criamos uma View interna EXPLICITA para controlar o layout (row/justify) */}
               <View className="flex-row items-center justify-between p-4 w-full">
-                
-                {/* Grupo Esquerdo */}
                 <View className="flex-1 flex-row items-center mr-2">
                   <View className="w-12 h-12 bg-plant-green/10 rounded-full items-center justify-center border border-plant-green/20 mr-3">
                     <Sprout size={24} color="#10b981" />
@@ -66,7 +63,6 @@ export default function Home() {
                   </View>
                 </View>
 
-                {/* Botão Youtube */}
                 <TouchableOpacity 
                   onPress={handleOpenTraining}
                   disabled={isTraining}
@@ -92,8 +88,6 @@ export default function Home() {
               style={{ width: '100%' }}
             />
           </View>
-
-          {/* --- INPUT --- */}
           <View className="w-full">
             <ChatInput onSend={sendMessage} disabled={isLoading} />
           </View>

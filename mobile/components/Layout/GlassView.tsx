@@ -19,10 +19,9 @@ export const GlassView = ({ children, intensity = 60, className, style, ...props
     >
       <BlurView 
         intensity={blurAmount} 
-        tint="dark" // Importante: força o vidro escuro
+        tint="dark"
         className="absolute inset-0" 
       />
-      {/* Removemos o bg-white/10 daqui e deixamos mais sutil */}
       <View className="bg-white/5 px-4 py-3">
         {children}
       </View>

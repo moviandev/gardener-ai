@@ -11,7 +11,6 @@ export const ImagePickerButton = ({ onImageSelected, disabled }: ImagePickerButt
   
   const pickImage = async () => {
     try {
-      // request permission
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
       
       if (permissionResult.granted === false) {
@@ -21,14 +20,13 @@ export const ImagePickerButton = ({ onImageSelected, disabled }: ImagePickerButt
 
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true, // Allows cropping (square)
+        allowsEditing: true,
         aspect: [4, 3],
-        quality: 0.5,        // Optimization for API upload
-        base64: true,        // Critical: We need this string for Python
+        quality: 0.5,
+        base64: true,
       });
 
       if (!result.canceled && result.assets[0].base64) {
-        // Format strictly for HTML/API usage
         const cleanBase64 = `data:image/jpeg;base64,${result.assets[0].base64}`;
         onImageSelected(cleanBase64);
       }
