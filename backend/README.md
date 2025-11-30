@@ -71,17 +71,17 @@ OPENAI_API_KEY=sk-proj-your-key-here
 Use the module execution method to ensure imports work correctly within the monorepo structure:
 
 ```bash
-uvicorn src.main:app --app-dir backend --reload --reload-dir backend/src
+uvicorn src.main:app --reload --reload-dir src --host 0.0.0.0
 ```
 
-The server will start at http://127.0.0.1:8000.
+The server will start at `http://127.0.0.1:8000`.
 
 ## 📡 API Endpoints
-Explore the interactive documentation at http://127.0.0.1:8000/docs.
+Explore the interactive documentation at `http://127.0.0.1:8000/docs`.
 
 **Core Routes**
-- POST /api/v1/chat: The main interaction endpoint. Accepts text and Base64 images. Returns the answer + source citations.
-- POST /api/v1/ingest: Accepts YouTube URLs. Validates content relevance -> Downloads transcript -> Chunks text -> Generates Embeddings -> Saves to ChromaDB.
+- POST `/api/v1/chat`: The main interaction endpoint. Accepts text and Base64 images. Returns the answer + source citations.
+- POST `/api/v1/ingest`: Accepts YouTube URLs. Validates content relevance -> Downloads transcript -> Chunks text -> Generates Embeddings -> Saves to ChromaDB.
 
 ## 💭 After Thoughts & Roadmap
 **What I learned**
