@@ -25,7 +25,7 @@ export default function Home() {
         "Paste a YouTube URL to teach the agent:",
         [
           { text: "Cancel", style: "cancel" },
-          { text: "Teach", onPress: (url) => url && trainAgent(url) }
+          { text: "Teach", onPress: (url: any) => url && trainAgent(url) }
         ],
         "plain-text"
       );
