@@ -1,23 +1,29 @@
-import { View, ViewProps } from 'react-native';
+import { View, ViewProps, Platform } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { twMerge } from 'tailwind-merge';
 
 interface GlassViewProps extends ViewProps {
   intensity?: number;
   className?: string;
-  children?: React.ReactNode; // Good practice to explicitly type children
+  children?: React.ReactNode;
 }
 
-export const GlassView = ({ children, intensity = 20, className, style, ...props }: GlassViewProps) => {
+export const GlassView = ({ children, intensity = 60, className, style, ...props }: GlassViewProps) => {
+  const blurAmount = Platform.OS === 'android' ? 100 : intensity;
+
   return (
-    // We pass 'style' specifically to allow NativeWind to merge inline styles if needed
     <View 
-      className={twMerge("overflow-hidden rounded-3xl border border-white/20", className)} 
+      className={twMerge("overflow-hidden rounded-[20px] border border-white/10", className)} 
       style={style}
       {...props}
     >
-      <BlurView intensity={intensity} tint="dark" className="absolute inset-0" />
-      <View className="bg-white/10 p-4">
+      <BlurView 
+        intensity={blurAmount} 
+        tint="dark" // Importante: força o vidro escuro
+        className="absolute inset-0" 
+      />
+      {/* Removemos o bg-white/10 daqui e deixamos mais sutil */}
+      <View className="bg-white/5 px-4 py-3">
         {children}
       </View>
     </View>

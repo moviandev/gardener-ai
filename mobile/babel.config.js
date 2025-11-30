@@ -2,6 +2,9 @@ module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
-    plugins: ["nativewind/babel"], // <--- Adicione esta linha
+    plugins: [
+      "nativewind/babel",
+      "react-native-reanimated/plugin",
+    ],
   };
 };

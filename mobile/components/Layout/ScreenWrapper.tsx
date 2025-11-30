@@ -13,13 +13,13 @@ interface ScreenWrapperProps extends ViewProps {
 export const ScreenWrapper = ({ children, className, ...props }: ScreenWrapperProps) => {
   return (
     <LinearGradient
-      // Dark Forest Gradient (Matching the Web version)
       colors={['#1a2e29', '#0f1c19', '#050a09']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={{ flex: 1 }}
     >
-      <SafeAreaView className={twMerge("flex-1", className)} {...props}>
+      {/* GARANTA QUE AQUI NÃO TEM 'items-center' */}
+      <SafeAreaView className={twMerge("flex-1 w-full", className)} {...props}>
         <StatusBar style="light" />
         {children}
       </SafeAreaView>

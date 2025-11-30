@@ -15,59 +15,63 @@ export const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleSend = () => {
-    // Prevent sending empty messages
     if ((!input.trim() && !selectedImage) || disabled) return;
-    
     onSend(input, selectedImage);
-    
-    // Reset state
     setInput('');
     setSelectedImage(null);
   };
 
   return (
-    <View className="px-4 pb-4 pt-2">
-      <GlassView intensity={40} className="flex-row items-end p-2 rounded-[25px]">
+    <View className="px-4 pb-8 pt-2">
+      {/* Container Principal do Input */}
+      <GlassView intensity={80} className="p-2 rounded-[30px] border border-white/20">
         
-        {/* 1. The new Modular Upload Button */}
-        <ImagePickerButton 
-          onImageSelected={setSelectedImage} 
-          disabled={disabled}
-        />
+        {/* Área de Preview da Imagem (aparece acima do texto se tiver imagem) */}
+        {selectedImage && (
+          <View className="px-2 pt-2 pb-1">
+            <ImagePreview 
+              imageUri={selectedImage} 
+              onRemove={() => setSelectedImage(null)} 
+            />
+          </View>
+        )}
 
-        {/* 2. Middle Section: Preview + Text Input */}
-        <View className="flex-1 min-h-[48px] justify-center py-2 mx-2">
+        {/* Linha de Controles: Botão Foto + Texto + Enviar */}
+        <View className="flex-row items-center justify-between">
           
-          {/* Shows only if an image is selected */}
-          <ImagePreview 
-            imageUri={selectedImage} 
-            onRemove={() => setSelectedImage(null)} 
-          />
-          
+          {/* Botão de Foto (Esquerda) */}
+          <View className="ml-1">
+            <ImagePickerButton 
+              onImageSelected={setSelectedImage} 
+              disabled={disabled}
+            />
+          </View>
+
+          {/* Input de Texto (Meio - Flex 1 para ocupar espaço) */}
           <TextInput
             value={input}
             onChangeText={setInput}
             placeholder="Ask about plants..."
             placeholderTextColor="rgba(255,255,255,0.4)"
             multiline
-            className="text-white text-base max-h-24 leading-5"
-            style={{ fontFamily: 'System' }} 
+            className="flex-1 text-white text-[16px] mx-3 max-h-24 py-3"
+            style={{ fontFamily: 'System', includeFontPadding: false, textAlignVertical: 'center' }}
           />
+
+          {/* Botão de Enviar (Direita) */}
+          <TouchableOpacity 
+            onPress={handleSend}
+            disabled={disabled || (!input.trim() && !selectedImage)}
+            className={`p-3 rounded-full mr-1 ${
+              disabled || (!input.trim() && !selectedImage)
+                ? "bg-white/10"
+                : "bg-plant-green"
+            }`}
+          >
+            <Send size={20} color="white" strokeWidth={2.5} />
+          </TouchableOpacity>
+
         </View>
-
-        {/* 3. Send Button */}
-        <TouchableOpacity 
-          onPress={handleSend}
-          disabled={disabled || (!input.trim() && !selectedImage)}
-          className={`p-3 rounded-full mb-1 ${
-            disabled || (!input.trim() && !selectedImage)
-              ? "bg-white/10"
-              : "bg-plant-green"
-          }`}
-        >
-          <Send size={20} color="white" />
-        </TouchableOpacity>
-
       </GlassView>
     </View>
   );
