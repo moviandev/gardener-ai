@@ -17,15 +17,8 @@ async def chat_endpoint(request: ChatRequest):
 
     result = brain.process_query(request.question, image_description)
     
-    answer_text = result["answer"]
-    source_documents = result["context"]
-
-    unique_sources = set()
-    for doc in source_documents:
-      if "source" in doc.metadata:
-        unique_sources.add(doc.metadata["source"])
-    
-    final_sources = list(unique_sources)
+    answer_text = result["answer"]    
+    final_sources = result["sources"]
 
     return ChatResponse(
       answer=answer_text,
