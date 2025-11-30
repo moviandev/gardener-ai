@@ -31,7 +31,7 @@ graph TD
 
 Detailed structure based on the current implementation:
 ```Text
-plant-ai-agent-envs/
+gardener-ai/
 ├── backend/                  # 🧠 The Brain (Python API)
 │   ├── src/
 │   │   ├── api/v1/           # Endpoints (Chat, Ingest)
