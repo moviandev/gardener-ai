@@ -9,17 +9,13 @@
 
 body {
   margin: 0;
-  /* Deep, organic gradient background */
   background: radial-gradient(circle at 0% 0%, #1a2e29 0%, #0f1c19 50%, #050a09 100%);
   color: rgba(255, 255, 255, 0.9);
   min-height: 100vh;
-  overflow: hidden; /* Prevent body scroll, we handle it in components */
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Liquid Glass Utilities 
-  High blur + low opacity background + subtle border
-*/
 @layer components {
   .glass-panel {
     @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl;
@@ -30,7 +26,6 @@ body {
     focus:outline-none focus:bg-black/40 focus:border-plant-green/40 transition-all duration-300;
   }
 
-  /* Custom Scrollbar for the chat area */
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }

@@ -20,14 +20,10 @@ function App() {
 
   return (
     <div className="h-screen w-full flex p-4 md:p-8 gap-6 justify-center items-center">
-      
-      {/* LEFT COLUMN: Control Panel / Training */}
       <GlassCard className="hidden md:flex flex-col w-1/3 max-w-sm h-full rounded-[2.5rem] border-white/5 relative overflow-hidden">
-        {/* Decorative background blob */}
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-plant-green/20 rounded-full blur-[80px] pointer-events-none" />
 
         <div className="relative z-10 flex flex-col h-full">
-          {/* Header */}
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-plant-green/20 rounded-2xl border border-plant-green/30 text-plant-green">
               <Sprout size={28} />
@@ -38,7 +34,6 @@ function App() {
             </div>
           </div>
 
-          {/* Training Section */}
           <div className="mt-auto mb-auto">
             <h2 className="flex items-center gap-2 text-lg font-medium text-white/90 mb-4">
               <BrainCircuit size={20} className="text-purple-400" />
@@ -80,7 +75,6 @@ function App() {
               </button>
             </div>
 
-            {/* Feedback Message */}
             {feedback && (
               <div className={clsx(
                 "mt-4 p-3 rounded-xl text-xs font-medium border text-center animate-pulse",
@@ -101,10 +95,7 @@ function App() {
         </div>
       </GlassCard>
 
-      {/* RIGHT COLUMN: Chat Interface */}
       <GlassCard className="flex-1 h-full rounded-[2.5rem] flex flex-col relative overflow-hidden border-white/5">
-        
-        {/* Chat Header */}
         <div className="p-6 border-b border-white/5 flex justify-between items-center bg-black/10 backdrop-blur-md z-10">
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -115,7 +106,6 @@ function App() {
           </div>
         </div>
 
-        {/* Messages Area */}
         <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scroll-smooth">
           {messages.map((msg, index) => (
             <ChatBubble key={index} message={msg} />
@@ -135,7 +125,6 @@ function App() {
           )}
         </div>
 
-        {/* Chat Input Area */}
         <div className="p-6 bg-gradient-to-t from-black/20 to-transparent z-10">
           <ChatInput onSend={sendMessage} disabled={isLoading} />
         </div>

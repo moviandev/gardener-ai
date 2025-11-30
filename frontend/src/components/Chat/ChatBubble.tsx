@@ -6,8 +6,8 @@ import { SourceBadge } from './SourceBadge';
 interface Message {
   role: 'user' | 'ai';
   content: string;
-  image?: string | null; // Optional image for user messages
-  sources?: string[];    // Optional sources for AI messages
+  image?: string | null;
+  sources?: string[];
 }
 
 interface ChatBubbleProps {
@@ -19,7 +19,6 @@ export const ChatBubble = ({ message }: ChatBubbleProps) => {
 
   return (
     <div className={clsx("flex gap-4 mb-6", isAi ? "flex-row" : "flex-row-reverse")}>
-      {/* Avatar Icon */}
       <div className={clsx(
         "flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-lg",
         isAi ? "bg-plant-green/20 text-plant-green border border-plant-green/30" : "bg-white/10 text-white border border-white/20"
@@ -27,14 +26,12 @@ export const ChatBubble = ({ message }: ChatBubbleProps) => {
         {isAi ? <Bot size={20} /> : <User size={20} />}
       </div>
 
-      {/* Message Content */}
       <div className={clsx(
         "max-w-[80%] rounded-2xl p-5 shadow-sm backdrop-blur-sm",
         isAi 
           ? "glass-panel rounded-tl-none text-white/90" 
           : "bg-plant-green text-white rounded-tr-none shadow-[0_0_15px_rgba(16,185,129,0.3)]"
       )}>
-        {/* If user uploaded an image, show it inside the bubble */}
         {message.image && (
           <img 
             src={message.image} 
@@ -43,12 +40,10 @@ export const ChatBubble = ({ message }: ChatBubbleProps) => {
           />
         )}
 
-        {/* Text Content (Markdown) */}
         <div className="prose prose-invert prose-sm max-w-none leading-relaxed">
           <ReactMarkdown>{message.content}</ReactMarkdown>
         </div>
 
-        {/* Sources (Only for AI) */}
         {isAi && message.sources && message.sources.length > 0 && (
           <div className="mt-4 pt-3 border-t border-white/10">
             <p className="text-xs text-white/50 mb-2 uppercase tracking-wider font-semibold">Sources learned:</p>

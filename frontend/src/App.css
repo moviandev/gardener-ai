@@ -9,7 +9,6 @@
 body {
   margin: 0;
   padding: 0;
-  /* Gradiente profundo e elegante */
   background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
   background-attachment: fixed;
   color: white;
@@ -17,7 +16,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Classes utilitárias para o efeito de Vidro */
 @layer components {
   .glass-panel {
     @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl;

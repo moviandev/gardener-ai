@@ -14,7 +14,6 @@ export const ImageUploader = ({ selectedImage, onImageSelect }: ImageUploaderPro
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        // The result is the Base64 string
         onImageSelect(reader.result as string);
       };
       reader.readAsDataURL(file);

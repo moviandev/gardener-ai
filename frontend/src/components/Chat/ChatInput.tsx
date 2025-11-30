@@ -28,15 +28,12 @@ export const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
 
   return (
     <div className="glass-panel p-2 rounded-3xl flex items-end gap-2 relative">
-      {/* Image Upload Button */}
       <div className="pb-1 pl-1">
         <ImageUploader 
           selectedImage={selectedImage} 
           onImageSelect={setSelectedImage} 
         />
       </div>
-
-      {/* Text Area */}
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -46,8 +43,6 @@ export const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
         disabled={disabled}
         rows={1}
       />
-
-      {/* Send Button */}
       <button
         onClick={handleSend}
         disabled={disabled || (!input.trim() && !selectedImage)}
