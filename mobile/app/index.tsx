@@ -38,10 +38,7 @@ export default function Home() {
     <ScreenWrapper>
       <KeyboardWrapper>
         <View className="flex-1 flex-col w-full">
-
-          {/* --- HEADER CORRIGIDO --- */}
           <View className="px-4 pt-4 pb-2 z-10 w-full">
-            {/* 1. GlassView lida apenas com borda, arredondamento e o efeito de vidro */}
             <GlassView 
               intensity={60} 
               className="rounded-[25px] border-white/10 overflow-hidden" 
@@ -81,9 +78,7 @@ export default function Home() {
               </View>
             </GlassView>
           </View>
-          {/* --- FIM DO HEADER --- */}
 
-          {/* --- LISTA --- */}
           <View className="flex-1 w-full">
             <FlatList
               ref={flatListRef}
