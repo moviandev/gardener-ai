@@ -1,50 +1,94 @@
-# Welcome to your Expo app 👋
+# Plant AI Agent - Mobile Experience 📱
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+The native mobile interface for the **Plant AI Agent**, built with **React Native** and **Expo**. This application brings the botanical assistant to your pocket, featuring a stunning **"Liquid Glass"** UI inspired by modern Apple/VisionOS design principles.
 
-## Get started
+It allows users to chat with the RAG Agent, upload plant photos for diagnosis via the camera, and train the AI using YouTube links directly from their device.
 
-1. Install dependencies
+![React Native](https://img.shields.io/badge/React_Native-0.74-61DAFB?logo=react&logoColor=black)
+![Expo](https://img.shields.io/badge/Expo-51-000020?logo=expo)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)
+![NativeWind](https://img.shields.io/badge/NativeWind-v2-38B2AC?logo=tailwindcss)
 
-   ```bash
-   npm install
-   ```
+## 🎨 UX/UI Design: "Liquid Glass"
 
-2. Start the app
+We pushed the boundaries of React Native styling to achieve a high-fidelity, translucent aesthetic.
 
-   ```bash
-   npx expo start
-   ```
+* **Native Blur:** Utilized `expo-blur` to create real-time background blurring behind UI elements.
+* **Gradient Atmospheres:** Implemented `expo-linear-gradient` to build deep, organic backgrounds that simulate a "Forest Night" environment.
+* **Glassmorphism:** Custom components (`GlassView`) combine opacity, blur, and subtle borders to mimic frosted glass.
 
-In the output, you'll find options to open the app in a
+## 📂 Project Structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The project follows a strict separation of concerns using **Clean Architecture** principles adapted for React Native.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+mobile/
+├── app/                  # Expo Router (File-based routing)
+│   ├── index.tsx         # Main Chat Screen
+│   └── _layout.tsx       # Global Navigation & Status Bar Config
+├── components/           # Reusable UI "Lego Blocks"
+│   ├── Chat/             # Chat bubbles, Input, Badges
+│   ├── Layout/           # GlassView, ScreenWrapper (SafeArea + Gradient)
+│   └── Upload/           # Logic for Camera/Gallery interaction
+├── hooks/                # Business Logic (State & Side Effects)
+│   ├── useChat.ts        # Manages messaging state & API communication
+│   └── useIngest.ts      # Handles YouTube URL training logic
+├── services/             # Axios Client & API Endpoints
+└── nativewind-env.d.ts   # Types for Tailwind classes in RN
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🚀 Getting Started
+### Prerequisites
+1. Node.js (LTS version)
+2. Expo Go app installed on your physical iOS or Android device.
+3. The Backend running locally on your network.
 
-## Learn more
+### Installation
+1. Navigate to the mobile directory:
+```Bash
+cd mobile
+```
+2. Install Dependencies:
+```Bash
+npm install
+```
+### ⚙️ Network Configuration (Critical)
+Since the app runs on a physical device (or emulator), it cannot access localhost. It must connect to your computer's Local IP Address.
 
-To learn more about developing your project with Expo, look at the following resources:
+1. Find your Local IP:
+   - Mac: Run ipconfig getifaddr en0 in the terminal (e.g., 192.168.1.15).
+   - Windows: Run ipconfig.
+2. Configure Environment Variables: Create a .env file in the mobile/ root and add your IP:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```Code Snippet
+# Replace 192.168.x.x with your actual IP
+EXPO_PUBLIC_IOS_API_URL=http://192.168.x.x:8000/api/v1
+EXPO_PUBLIC_ANDROID_API_URL=http://10.0.2.2:8000/api/v1
+EXPO_PUBLIC_MOBILE_API_URL=http://192.168.x.x:8000/api/v1
+```
+3. Prepare the Backend: Ensure your Python backend is listening on all interfaces (0.0.0.0):
+```Bash
+# In the backend folder
+uvicorn src.main:app --reload --reload-dir src --host 0.0.0.0
+```
+### ▶️ Running the App
+Start the Metro Bundler:
+```Bash
+npx expo start -c
+```
+(The `-c` flag clears the cache, ensuring NativeWind styles load correctly).
+- Physical Device: Scan the QR code with your phone's camera.
+- Simulator: Press `i` for iOS or `a` for Android.
 
-## Join the community
+## 🛠️ Technical Decisions
+1. *Expo Router*
+Decision: Used file-based routing (app/index.tsx). Why: It aligns the mobile development mental model with the web (Next.js style), simplifying navigation logic and reducing boilerplate code compared to React Navigation.
+2. *NativeWind (Tailwind for RN)*
+Decision: Used Tailwind utility classes for styling. Why: Allowed us to share design tokens (colors, spacing) with the Web Frontend, ensuring brand consistency while speeding up UI development significantly.
+3. *Custom Hooks (useChat)*
+Decision: Extracted all state logic into hooks/. Why: Keeps the UI components (index.tsx) purely presentational. This makes the code easier to test and allows us to swap the API layer without breaking the layout.
+4. *Smart API Switching*
+Decision: Implemented a getBaseUrl helper in services/api.ts. Why: Automatically detects if the app is running on Android Emulator (needs 10.0.2.2) or iOS/Physical Device (needs LAN IP), preventing common connection errors during development.
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+Plant AI Agent - Ironhack Final Project

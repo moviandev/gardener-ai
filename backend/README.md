@@ -95,3 +95,5 @@ Video Timestamps: Currently, we return the video URL as a source. The next level
 
 Chat History: Implement a session-based memory (using Redis or Postgres) so the user can have a continuous conversation rather than one-off questions.
 
+---
+Plant AI Agent - Ironhack Final Project
